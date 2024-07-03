@@ -16,3 +16,12 @@ To install packages/dependencies from requirements.txt file we use : pip install
 
 Note: How to use .gitignore ( create manually - a file named .gitignore in the root ) 
 gitignore is a file that contains a list of file names or folders that we want to avoid in our git repo.
+
+To creat a FastAPI  project repo: 
+Go to github and manually create a public repo
+follow all the commands and push the code.
+Whenever you make changes, save the file and follow below cmd: 
+git add . - adds all the files from the project to the local staging.
+git commit -m "message" -  commits the code
+git push -u origin main - pushes the code
+
