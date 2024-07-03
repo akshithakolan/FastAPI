@@ -1,0 +1,18 @@
+Virtual Env : a setup in which we can use different versions of the same application to work on different projects and use different features.
+Installed virtual env through :  python3 -m venv <name>
+
+Helps you isolate your project dependencies
+
+To activate your Venv : source <name>/bin/activate
+To deactivate : deactivate
+
+Install FastAPI: pip install FastAPI
+
+Note: When pushing your code into remote repo's, we dont need to track/store venv file in the repo. To avoid this we will .gitignore file.
+Instead use requirements.txt file to track all your dependencies/packages in the project. Use this file to install dependencies.
+
+To create a requirements.txt file: pip freeze > requirements.txt 
+To install packages/dependencies from requirements.txt file we use : pip install -r requirements.txt 
+
+Note: How to use .gitignore ( create manually - a file named .gitignore in the root ) 
+gitignore is a file that contains a list of file names or folders that we want to avoid in our git repo.
