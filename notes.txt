@@ -26,3 +26,33 @@ git commit -m "message" -  commits the code
 git push -u origin main - pushes the code
 
 To run FastAPI application, use this command : uvicorn main:apps
+
+Whenever we make changes to our code, we dont need to restart the server instead we can use this command :
+uvicorn main:apps --reload 
+
+What are decorators in python?
+That @something syntax in Python is called a "decorator".
+You put it on top of a function. Like a pretty decorative hat.
+A "decorator" takes the function below and does something with it.
+In our case, this decorator tells **FastAPI** that the function below corresponds to the **path** / with an **operation** get.
+
+Postman - A tool to test our application
+Among the other HTTP requests: we used get and post to retrive the data from the API.
+To retrieve the body data created in postman in VSC:
+Within the path operation function we can assign variable - def def create_posts(payLoad: dict = Body(...)):
+print(payLoad)
+This will import the lib Body from the fastapi; 
+extracts all the fields ie data from the Body, converts into python dict, stores inside the variable payload.
+
+Pydantic:
+Lib used to define schema
+First we define a class, extend Basemodel - class Post(BaseModel):
+Instead of extrctg payload, ref the post and save it
+fastapi will automatically validate the data from the client based off the pydantic model.
+each pydantic model has method called .dict
+pad -> dict = new_post.dict()
+
+CRUD : create, read, update, delete.
+for the above methods we use the following http requests: get, put, patch, delete.
+
+We have created an 'id' to be stored in our local memory as a primary key. Create an array which python dict.
