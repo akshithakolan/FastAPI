@@ -36,7 +36,7 @@ You put it on top of a function. Like a pretty decorative hat.
 A "decorator" takes the function below and does something with it.
 In our case, this decorator tells **FastAPI** that the function below corresponds to the **path** / with an **operation** get.
 
-Postman - A tool to test our application
+Postman - A tool to test our application.
 Among the other HTTP requests: we used get and post to retrive the data from the API.
 To retrieve the body data created in postman in VSC:
 Within the path operation function we can assign variable - def def create_posts(payLoad: dict = Body(...)):
@@ -56,3 +56,4 @@ CRUD : create, read, update, delete.
 for the above methods we use the following http requests: get, put, patch, delete.
 
 We have created an 'id' to be stored in our local memory as a primary key. Create an array which python dict.
+Used append to pass in what we have to append to the array to get the newly created entry with an id.
