@@ -1,5 +1,5 @@
 Virtual Env : a setup in which we can use different versions of the same application to work on different projects and use different features.
-Installed virtual env through :  python3 -m venv <name>
+To create a virtual env :  python3 -m venv <name>
 
 Helps you isolate your project dependencies
 
