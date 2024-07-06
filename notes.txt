@@ -57,3 +57,6 @@ for the above methods we use the following http requests: get, put, patch, delet
 
 We have created an 'id' to be stored in our local memory as a primary key. Create an array which python dict.
 Used append to pass in what we have to append to the array to get the newly created entry with an id.
+
+To restart the server after adding a file in any newly created folder: uvicorn <foldername>.main:app --reload 
+Setting up our DB - Postgres:
