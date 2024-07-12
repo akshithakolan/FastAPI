@@ -59,4 +59,25 @@ We have created an 'id' to be stored in our local memory as a primary key. Creat
 Used append to pass in what we have to append to the array to get the newly created entry with an id.
 
 To restart the server after adding a file in any newly created folder: uvicorn <foldername>.main:app --reload 
+
 Setting up our DB - Postgres:
+
+After creating your own local server, create a database instance - fastapi;
+create a table under schema-public; define your columns and enter your data.
+When we usually create en entry, we want the timestamp od the entry created. 
+To do so: create another column and add the NOW() constraint.
+
+ #Setup the DB connection
+try:
+    conn = psycopg2.connect(host = 'localhost', database = 'dbname', user ='username', password = 'user-password', cursor_factory = RealDictCursor)
+    cursor = conn.cursor()
+    print('Database connection successfull!')
+except Exception as error:
+    print("COnnecting to Database failed")
+    print("Error: ", error)
+
+COL's - title: str
+    content: str
+    published: bool = True
+    id
+    created_at
