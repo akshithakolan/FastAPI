@@ -81,3 +81,8 @@ COL's - title: str
     published: bool = True
     id
     created_at
+
+
+
+
+        
