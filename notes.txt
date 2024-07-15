@@ -76,13 +76,32 @@ except Exception as error:
     print("COnnecting to Database failed")
     print("Error: ", error)
 
-COL's - title: str
-    content: str
-    published: bool = True
-    id
-    created_at
+COL's - title: char
+    content: char
+    published:boolean - true
+    id - serial
+    created_at with the datatype of - timestamp with timestone along with the constraint: NOW()
 
 
+To create a brand new post:
+pass the parameters of the table with the insert into function, add the returning sql command to retrive the data when fetched.
+when working with postgres: we have to .commit the changes made to make them reflect in out db.
+to save the data we ref the connection and then do the commit to push all the changes.
 
+Fetching an individual post by id:
+pass in the sql command to select from post-table, 
+Initially we validated the id to be an integer, to fetch a single post we need to pass in the '%s' to retrieve that data,
+so we need to convert the validated integer into a string with str(id)
 
-        
+To delete an individual post 
+use the cursor.execute and pass the sql command
+commit the changes made
+
+update
+follow the same but also include the where constraintcommit the changes
+
+Working with a DB - ORM - SQLALCHEMY(standalone lib)
+This will perform all the operations through regular python
+We can define tables as python modules
+
+SQLALCHEMY_DATABASE_URL = 'postgresql://<username>:<password>@ip-address/hostname>/<databse_name>'
