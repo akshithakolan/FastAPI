@@ -65,10 +65,13 @@ def test_posts(db: Session = Depends(get_db)):
 #CRUD
 #function to get post
 @app.get("/posts")
-def get_posts():
+def get_posts(db: Session = Depends(get_db)):
 #    cursor.execute(""" SELECT * FROM posts """)
 #    posts = cursor.fetchall()
-   return {"data": posts}
+
+    posts = db.query(models.Post).all()
+
+    return {"data": posts}
 
 #function to create post
 @app.post("/posts", status_code = status.HTTP_201_CREATED)
