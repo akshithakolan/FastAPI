@@ -56,15 +56,18 @@ def root():
 
 @app.get("/sqlalchemy")
 def test_posts(db: Session = Depends(get_db)):
-    return{"status": "successs"}
+
+    posts = db.query(models.Post).all()
+    print(posts)
+    return {"status": "successfull"}
 
 
 #CRUD
 #function to get post
 @app.get("/posts")
 def get_posts():
-   cursor.execute(""" SELECT * FROM posts """)
-   posts = cursor.fetchall()
+#    cursor.execute(""" SELECT * FROM posts """)
+#    posts = cursor.fetchall()
    return {"data": posts}
 
 #function to create post
