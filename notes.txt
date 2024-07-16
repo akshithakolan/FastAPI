@@ -69,7 +69,7 @@ To do so: create another column and add the NOW() constraint.
 
  #Setup the DB connection
 try:
-    conn = psycopg2.connect(host = 'localhost', database = 'dbname', user ='username', password = 'user-password', cursor_factory = RealDictCursor)
+    conn = psycopg2.connect(host = 'localhost', database = 'dbname', user ='user-name', password = 'user-password', cursor_factory = RealDictCursor)
     cursor = conn.cursor()
     print('Database connection successfull!')
 except Exception as error:
@@ -82,6 +82,10 @@ COL's - title: char
     id - serial
     created_at with the datatype of - timestamp with timestone along with the constraint: NOW()
 
+The usual sql to perform CRUD looks like: 
+"""INSERT INTO <table> VALUES (%s) RETRURNING *""" #rest.....
+.fetchone()/.fetchall()
+con.commit()
 
 To create a brand new post:
 pass the parameters of the table with the insert into function, add the returning sql command to retrive the data when fetched.
@@ -97,11 +101,27 @@ To delete an individual post
 use the cursor.execute and pass the sql command
 commit the changes made
 
-update
-follow the same but also include the where constraintcommit the changes
+update post
+follow the same but also include the where constraint 
+commit the changes
 
 Working with a DB - ORM - SQLALCHEMY(standalone lib)
 This will perform all the operations through regular python
 We can define tables as python modules
 
 SQLALCHEMY_DATABASE_URL = 'postgresql://<username>:<password>@ip-address/hostname>/<databse_name>'
+
+TO make sure the path operations are working with the DB pass this argument
+db: Session = Depends(get_db)
+
+Performing CRUD with SQLALCHEMY looks like:
+create a post var having models.post(contsaints)
+db.add - to add the changes
+db.commit - to commit the changes
+db.refresh - to retrieve the changes made.
+
+Creating a post using ORM:
+create a post var having models.post(contsaints)
+db.add - to add the changes
+db.commit - to commit the changes
+db.refresh - to retrieve the changes made.

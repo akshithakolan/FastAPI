@@ -75,12 +75,20 @@ def get_posts(db: Session = Depends(get_db)):
 
 #function to create post
 @app.post("/posts", status_code = status.HTTP_201_CREATED)
-def create_posts(post: Post):
-    cursor.execute("""INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING * """, (post.title, post.content, post.published))
-    new_post = cursor.fetchone()
+def create_posts(post: Post,db: Session = Depends(get_db)):
+    # cursor.execute("""INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING * """, (post.title, post.content, post.published))
+    # new_post = cursor.fetchone()
 
-    conn.commit()
+    # conn.commit()
 
+    #create a new post
+    new_post = models.Post(title=post.title, content=post.content, published=post.published)
+    #add it to the database
+    db.add(new_post) 
+    #commit the changes
+    db.commit()
+    #retrieve the changes made and store it back into new_post
+    db.refresh(new_post)
     return{"data": new_post}
 
 #function to retrieve an individual post
