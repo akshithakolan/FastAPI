@@ -131,3 +131,8 @@ We used .filter() where posts.id===id and fetch the first matched id.
 
 To delete:
 do the same as above
+
+Schemas
+
+
+How are models define pydantic/schema

@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
 from sqlalchemy.orm import Session
-from . import models
+from . import models,schemas
 from . database import engine, get_db
 
 #SessionLocal object is responsible for talking to the db
@@ -16,7 +16,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
+#Schema
 class Post(BaseModel):
     title: str
     content: str
@@ -54,13 +54,6 @@ def find_index_posts(id):
 def root():  
     return {"message": "Hello World"}
 
-@app.get("/sqlalchemy")
-def test_posts(db: Session = Depends(get_db)):
-
-    posts = db.query(models.Post).all()
-    print(posts)
-    return {"status": "successfull"}
-
 
 #CRUD
 #function to get post
@@ -71,11 +64,11 @@ def get_posts(db: Session = Depends(get_db)):
 
     posts = db.query(models.Post).all()
 
-    return {"data": posts}
+    return  posts
 
 #function to create post
 @app.post("/posts", status_code = status.HTTP_201_CREATED)
-def create_posts(post: Post,db: Session = Depends(get_db)):
+def create_posts(post: schemas.PostCreate,db: Session = Depends(get_db)):
     # cursor.execute("""INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING * """, (post.title, post.content, post.published))
     # new_post = cursor.fetchone()
 
@@ -88,7 +81,7 @@ def create_posts(post: Post,db: Session = Depends(get_db)):
     db.commit()
     #retrieve the changes made and store it back into new_post
     db.refresh(new_post)
-    return{"data": new_post}
+    return new_post
 
 #function to retrieve an individual post
 @app.get("/posts/{id}")
@@ -102,7 +95,7 @@ def get_posts(id: int,db: Session = Depends(get_db)):
         raise HTTPException( status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} was not found ")
         #response.status_code = status.HTTP_404_NOT_FOUND
        # return { "message": f"post with id: {id} was not found "}
-    return{"post_detail": post}
+    return post
 
 #to delete a post ie a http req
 #find the index in the array that has required ID
@@ -124,7 +117,7 @@ def delete_post(id:int,db: Session = Depends(get_db)):
 
 #Update posts
 @app.put("/posts/{id}")
-def update_post(id: int, post: Post, db: Session = Depends(get_db)):
+def update_post(id: int,updated_post: schemas.PostCreate, db: Session = Depends(get_db)):
 
     # cursor.execute("""UPDATE posts SET title =  %s, content = %s, published = %s WHERE id =%s RETURNING *""", (post.title, post.content, post.published, (str(id))))
     
@@ -135,12 +128,13 @@ def update_post(id: int, post: Post, db: Session = Depends(get_db)):
     post_query = db.query(models.Post).filter(models.Post.id == id)
     post = post_query
 
-    if post == None:
+    if post.first() == None:
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} does not exist")
-    post_query.update({'title': 'hey this is newww!!', 'content': 'Neww is hereee'}, synchronize_session=False)
-    #    post_query.update(post.dict(), synchronize_session=False)
+    # post_query.update({'title': 'hey this is newww!!', 'content': 'Neww is hereee'}, synchronize_session=False)
+    post_query.update(updated_post.dict(), synchronize_session=False)
 
     db.commit()
     # return{"data": 'successfull!'}
-    return{"data": post_query.first()} #fetches the updated post
+    #fetches the updated
+    return post_query.first()
 
