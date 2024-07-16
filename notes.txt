@@ -125,3 +125,6 @@ create a post var having models.post(contsaints)
 db.add - to add the changes
 db.commit - to commit the changes
 db.refresh - to retrieve the changes made.
+
+To retrive an individual post:
+We used .filter() where posts.id===id and fetch the first matched id.

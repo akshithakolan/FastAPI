@@ -80,9 +80,8 @@ def create_posts(post: Post,db: Session = Depends(get_db)):
     # new_post = cursor.fetchone()
 
     # conn.commit()
-
     #create a new post
-    new_post = models.Post(title=post.title, content=post.content, published=post.published)
+    new_post = models.Post(**post.dict())
     #add it to the database
     db.add(new_post) 
     #commit the changes
@@ -93,10 +92,12 @@ def create_posts(post: Post,db: Session = Depends(get_db)):
 
 #function to retrieve an individual post
 @app.get("/posts/{id}")
-def get_posts(id: int):
-    cursor.execute("""SELECT * from posts WHERE id = %s""", (str(id),))
-    post = cursor.fetchone()
+def get_posts(id: int,db: Session = Depends(get_db)):
+    # cursor.execute("""SELECT * from posts WHERE id = %s""", (str(id),))
+    # post = cursor.fetchone()
     
+    post = db.query(models.Post).filter(models.Post.id == id).first()
+    print(post)
     if not post:
         raise HTTPException( status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} was not found ")
         #response.status_code = status.HTTP_404_NOT_FOUND
