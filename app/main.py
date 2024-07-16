@@ -109,29 +109,38 @@ def get_posts(id: int,db: Session = Depends(get_db)):
 #my_posts.pop(index) and pass the index
 
 @app.delete("/posts/{id}", status_code = status.HTTP_204_NO_CONTENT )
-def delete_post(id:int):
+def delete_post(id:int,db: Session = Depends(get_db)):
 
-    cursor.execute(""" DELETE FROM posts WHERE id = %s RETURNING * """, (str(id),) )
-    deleted_post = cursor.fetchone()
-    conn.commit()
-
-    if deleted_post == None:
-        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} does not exist")
+    # cursor.execute(""" DELETE FROM posts WHERE id = %s RETURNING * """, (str(id),) )
+    # deleted_post = cursor.fetchone()
+    # conn.commit()
     
+    post = db.query(models.Post).filter(models.Post.id == id)
+    if post.first() == None:
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} does not exist")
+    post.delete(synchronize_session=False)
+    db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 #Update posts
 @app.put("/posts/{id}")
-def update_post(id: int, post: Post):
+def update_post(id: int, post: Post, db: Session = Depends(get_db)):
 
-    cursor.execute("""UPDATE posts SET title =  %s, content = %s, published = %s WHERE id =%s RETURNING *""", (post.title, post.content, post.published, (str(id))))
+    # cursor.execute("""UPDATE posts SET title =  %s, content = %s, published = %s WHERE id =%s RETURNING *""", (post.title, post.content, post.published, (str(id))))
     
-    updated_post = cursor.fetchone()
-    conn.commit()
+    # updated_post = cursor.fetchone()
+    # conn.commit()
 
     #check if its available
-    if updated_post == None:
+    post_query = db.query(models.Post).filter(models.Post.id == id)
+    post = post_query
+
+    if post == None:
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} does not exist")
-    
-    return{"data": updated_post}
+    post_query.update({'title': 'hey this is newww!!', 'content': 'Neww is hereee'}, synchronize_session=False)
+    #    post_query.update(post.dict(), synchronize_session=False)
+
+    db.commit()
+    # return{"data": 'successfull!'}
+    return{"data": post_query.first()} #fetches the updated post
 

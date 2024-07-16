@@ -128,3 +128,6 @@ db.refresh - to retrieve the changes made.
 
 To retrive an individual post:
 We used .filter() where posts.id===id and fetch the first matched id.
+
+To delete:
+do the same as above
