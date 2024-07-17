@@ -136,3 +136,5 @@ Schemas
 
 
 How are models define pydantic/schema
+
+Define how response should like using our models:
