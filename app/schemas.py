@@ -20,4 +20,4 @@ class Post(PostBase):
 
 class UserCreate(BaseModel):
     email: EmailStr
-    password: EmailStr
+    password: str
