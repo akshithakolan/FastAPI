@@ -132,9 +132,15 @@ We used .filter() where posts.id===id and fetch the first matched id.
 To delete:
 do the same as above
 
-Schemas
-
 
 How are models define pydantic/schema
 
 Define how response should like using our models:
+response_model=schemas.Post
+
+Creating User fFunctionality:
+login,create an acc etc
+create a new class in models extending the Base class
+add in all the fields like id,email,pass,etc
+
+New path operation to allow the user to be able send his creds to our api
