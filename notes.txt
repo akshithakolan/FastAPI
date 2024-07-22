@@ -160,3 +160,10 @@ header - meta data of token : specify the alg, type
 payLoad - any piece of info, not encrypted : like id
 signature - combo of above 2, also add a secret key = 3
     purpose: 
+
+to login into a user on our api in the form-data format,
+import the OAuth2passwordreqform.
+and  run the block of code
+Postman sends back the access token that jwt created
+
+logic for-  the token is still valid
