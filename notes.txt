@@ -25,10 +25,10 @@ git add . - adds all the files from the project to the local staging.
 git commit -m "message" -  commits the code
 git push -u origin main - pushes the code
 
-To run FastAPI application, use this command : uvicorn main:apps
+To run FastAPI application, use this command : uvicorn main:app
 
 Whenever we make changes to our code, we dont need to restart the server instead we can use this command :
-uvicorn main:apps --reload 
+uvicorn main:app --reload 
 
 What are decorators in python?
 That @something syntax in Python is called a "decorator".
@@ -58,7 +58,7 @@ for the above methods we use the following http requests: get, put, patch, delet
 We have created an 'id' to be stored in our local memory as a primary key. Create an array which python dict.
 Used append to pass in what we have to append to the array to get the newly created entry with an id.
 
-To restart the server after adding a file in any newly created folder: uvicorn <foldername>.main:app --reload 
+**To restart the server after adding a file in any newly created folder: uvicorn <foldername>.main:app --reload 
 
 Setting up our DB - Postgres:
 
