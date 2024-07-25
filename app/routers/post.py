@@ -61,7 +61,7 @@ def get_posts(id: int,db: Session = Depends(get_db)):
 #my_posts.pop(index) and pass the index
 
 @router.delete("/{id}", status_code = status.HTTP_204_NO_CONTENT )
-def delete_post(id:int,db: Session = Depends(get_db)):
+def delete_post(id:int,db: Session = Depends(get_db),user_id: int = Depends(oauth2.get_current_user)):
 
     # cursor.execute(""" DELETE FROM posts WHERE id = %s RETURNING * """, (str(id),) )
     # deleted_post = cursor.fetchone()
@@ -76,13 +76,11 @@ def delete_post(id:int,db: Session = Depends(get_db)):
 
 #Update posts
 @router.put("/{id}",response_model=schemas.Post)
-def update_post(id: int,updated_post: schemas.PostCreate, db: Session = Depends(get_db)):
+def update_post(id: int,updated_post: schemas.PostCreate, db: Session = Depends(get_db),user_id: int = Depends(oauth2.get_current_user)):
 
     # cursor.execute("""UPDATE posts SET title =  %s, content = %s, published = %s WHERE id =%s RETURNING *""", (post.title, post.content, post.published, (str(id))))
-    
     # updated_post = cursor.fetchone()
     # conn.commit()
-
     #check if its available
     post_query = db.query(models.Post).filter(models.Post.id == id)
     post = post_query
@@ -96,3 +94,7 @@ def update_post(id: int,updated_post: schemas.PostCreate, db: Session = Depends(
     # return{"data": 'successfull!'}
     #fetches the updated
     return post_query.first()
+
+
+
+
