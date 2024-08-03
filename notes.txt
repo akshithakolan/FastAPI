@@ -167,3 +167,6 @@ and  run the block of code
 Postman sends back the access token that jwt created
 
 logic for-  the token is still valid
+
+RDBMS:
+foreign key to be created within postgreswith SQLALCHEMY: 
