@@ -70,7 +70,10 @@ def delete_post(id:int,db: Session = Depends(get_db),current_user: int = Depends
     post = db.query(models.Post).filter(models.Post.id == id)
     if post.first() == None:
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} does not exist")
-    post.delete(synchronize_session=False)
+    
+    if post.owner_id != oauth2.get_current_user.id:
+        raise HTTPException(status_code = status.HTTP_403_FORBIDDEN, detail= f"Not Authoeized to perform required action" )
+    post.delete(synchronize_session=False) 
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
