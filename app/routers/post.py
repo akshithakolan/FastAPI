@@ -87,9 +87,9 @@ def update_post(id: int,updated_post: schemas.PostCreate, db: Session = Depends(
     # conn.commit()
     #check if its available
     post_query = db.query(models.Post).filter(models.Post.id == id)
-    post = post_query
+    post = post_query.first()
 
-    if post.first() == None:
+    if post == None:
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} does not exist")
     # post_query.update({'title': 'hey this is newww!!', 'content': 'Neww is hereee'}, synchronize_session=False)
     if post.owner__id != current_user.id:
