@@ -18,9 +18,8 @@ router = APIRouter(
 def get_posts(db: Session = Depends(get_db), current_user : int = Depends(oauth2.get_current_user)):
 #    cursor.execute(""" SELECT * FROM posts """)
 #    posts = cursor.fetchall()
-    print(current_user.id)
 
-    posts = db.query(models.Post).filter(models.Post.owner__id == current_user.id).all()
+    posts = db.query(models.Post).all()
 
     return  posts
 
